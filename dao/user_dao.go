@@ -30,6 +30,17 @@ func (ud *UserDao) AddUser(user *model.User) bool {
 	}
 }
 
+// 删除用户
+func (ud *UserDao) DelUser(uid string) bool {
+	user := model.NewUser("", "", "")
+	DBMgr.Where("uid = ?", uid).Delete(user)
+	if ud.GetUserInfo(uid).Username == "" {
+		return true
+	} else {
+		return false
+	}
+}
+
 // 更改密码
 func (ud *UserDao) UpdatePassword(user *model.User) bool {
 	res := DBMgr.Model(user).Where("uid = ?",user.Uid).Update("password",user.Password)

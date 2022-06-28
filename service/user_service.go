@@ -50,6 +50,15 @@ func (us *UserService) UserLogin(user *model.User) (bool, *model.User) {
 	}
 }
 
+// 用户注销
+func (us *UserService) DeleteUser(user *model.UserInfo) (bool) {
+	if b := us.userdao.DelUser(user.Uid); b {
+		return true
+	} else {
+		return false
+	}
+}
+
 // 更改密码
 func (us *UserService) UpdatePassword(userInfo *model.UserInfo) bool {
 	u := us.userdao.GetUserInfo(userInfo.Uid)
