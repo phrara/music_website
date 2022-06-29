@@ -104,6 +104,18 @@ func DelUser(c *gin.Context){
 }
 
 
-
+// 更改用户信息
+func UpdateUserInfo(c *gin.Context){
+	user := model.NewUser("", "", "")
+	err := c.ShouldBind(user)
+	if err != nil {
+		return
+	}
+	us.UpdateInfo(user)
+	c.JSON(200, gin.H{
+		"msg": "ok",
+		"data": *user,
+	})
+}
 
 

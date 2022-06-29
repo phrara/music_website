@@ -76,3 +76,7 @@ func (us *UserService) UpdatePassword(userInfo *model.UserInfo) bool {
 }
 
 
+// 更改用户信息
+func (us *UserService) UpdateInfo(user *model.User) {
+	us.userdao.UpdateUserInfo(user)
+}

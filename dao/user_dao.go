@@ -50,3 +50,8 @@ func (ud *UserDao) UpdatePassword(user *model.User) bool {
 		return false
 	}
 }
+
+// 更改用户信息
+func (ud *UserDao) UpdateUserInfo(user *model.User) {
+	DBMgr.Model(&model.User{}).Updates(*user)
+}
