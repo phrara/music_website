@@ -48,10 +48,10 @@ func (sd *SongDao) DeleteSong(iid string) bool {
 }
 
 // 播放次数修改
-func (sd *SongDao) UpdatePlayCnt(iid string) bool {
+func (sd *SongDao) UpdatePlayCnt(iid string, dif uint) bool {
 	u := sd.GetSongInfo(iid).PlayCount
 	song := model.NewSong("","")
-	res := DBMgr.Model(song).Where("iid = ?", iid).Update("playcnt", u+1)
+	res := DBMgr.Model(song).Where("iid = ?", iid).Update("playcnt", u + dif)
 	if res.RowsAffected > 0 {
 		return true
 	} else {

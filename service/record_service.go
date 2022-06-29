@@ -35,7 +35,7 @@ func (rs *RecordService) AddRecord(rec *model.Record) tool.Res {
 	t := strconv.FormatInt(time.Now().UnixNano()/1e6, 10)	
 	if b := rs.rd.AddRecord(rec.Uid, rec.Iid, t); b {
 		rec.TimeStamp = t
-		if b2 := rs.sd.UpdatePlayCnt(rec.Iid); b2 {
+		if b2 := rs.sd.UpdatePlayCnt(rec.Iid, 1); b2 {
 			return tool.GetGoodResult(*rec)
 		} else {
 			return tool.GetGoodResult(*rec)
