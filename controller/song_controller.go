@@ -3,7 +3,9 @@ package controller
 import (
 	"MusicWebsite/model"
 	"MusicWebsite/service"
+	"MusicWebsite/tool"
 	"encoding/json"
+	"strconv"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,9 +21,9 @@ func SearchByKw(c *gin.Context){
 	if err != nil {
 		return
 	}
-	var m map[string]any
+	var m tool.Res
 	_ = json.Unmarshal(b, &m)
-	list := ss.SearchForSongs(m["kw"].(string))
+	list := ss.SearchForSongs(m["keyword"].(string))
 	c.JSON(200, list)
 }
 	
@@ -32,7 +34,22 @@ func SearchByKw(c *gin.Context){
 // @param      c      *gin.Context       "HttpContent"
 // @return    无       无      "无"
 func GetSongs(c *gin.Context){
-	list := ss.GetSongList()
+	b, err := c.GetRawData()
+	if err != nil {
+		return
+	}
+	var data tool.Res
+	_ = json.Unmarshal(b, &data)
+	index := int64(0)
+	switch data["currentPage"].(type) {
+	case string:
+		index, _ = strconv.ParseInt(data["currentPage"].(string), 10, 64)
+	case float64:
+		index = int64(data["currentPage"].(float64))
+	default:
+		index = data["currentPage"].(int64)
+	}
+	list := ss.GetSongList(int(index), 10)
 	c.JSON(200, list)
 }
 

@@ -40,7 +40,8 @@ func posts(r *gin.Engine) {
 	r.POST("/songId", controller.GetSongInfo)
 	r.POST("/addSong", controller.AddSong)
 	r.POST("/deleteSong", controller.DelSong)
-	r.POST("/search", controller.SearchByKw)
+	r.POST("/searchSongs", controller.SearchByKw)
+	r.POST("/discover", controller.GetSongs)
 
 	r.POST("/addRecord", controller.AddRecord)
 	r.POST("/getRecordSong", controller.GetRecord)

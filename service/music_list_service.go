@@ -9,11 +9,14 @@ import (
 type MusicListService struct {
 	mld *dao.MusicListDao
 	songDao *dao.SongDao
+	sgrDao *dao.SingerDao
 }
 
 func NewMusicListService() *MusicListService {
 	mls := new(MusicListService)
 	mls.mld = new(dao.MusicListDao)
+	mls.songDao = new(dao.SongDao)
+	mls.sgrDao = new(dao.SingerDao)
 	return mls
 }
 
@@ -31,12 +34,14 @@ func (m *MusicListService) GetMusicLists() tool.Res {
 // GetMusicList 获取歌单
 func (s *MusicListService) GetMusicList(ml *model.MusicList) tool.Res {
 	list := s.mld.GetMusicList(ml.Mid)
-	songs := make([]model.Song,0)
+	infoList := make([]model.SongInfo,0)
 	for _, v := range list {
 		song := s.songDao.GetSongInfo(v.Iid)
-		songs = append(songs, *song)
+		sn := s.sgrDao.GetSingerInfo(song.SingerId).SingerName
+		si := model.NewSongInfo(song, sn)
+		infoList = append(infoList, *si)
 	}
-	return tool.GetGoodResult(songs)
+	return tool.GetGoodResult(infoList)
 }
 
 // AddMusicList 添加歌单

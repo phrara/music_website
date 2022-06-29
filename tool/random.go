@@ -9,12 +9,12 @@ import (
 func GetRandomId(args string) string {
 	rand.Seed(time.Now().UnixNano())
 	// 位数
-	figure := 1 + rand.Int63n(11)
+	figure := 8 + rand.Int63n(5)
 
 	// 初始化
 	hash := md5.Sum([]byte(args))
 	
-	t := make([]string,11)
+	t := make([]string,12)
 	t[0] = string(rune(int(hash[13]) % 2 + 48 + rand.Intn(9)))
 	t[1] = string(rune(int(hash[11]) % 2 + 48 + rand.Intn(9)))
 	t[2] = string(rune(int(hash[10]) % 2 + 48 + rand.Intn(9)))
@@ -26,6 +26,7 @@ func GetRandomId(args string) string {
 	t[8] = string(rune(int(hash[14]) %2 + 48 + rand.Intn(9)))
 	t[9] = string(rune(int(hash[2]) %2 + 48 + rand.Intn(9)))
 	t[10] = string(rune(int(hash[9]) %2 + 48 + rand.Intn(9)))
+	t[11] = string(rune(int(hash[14]) %2 + 48 + rand.Intn(9)))
 
 	res := ""
 

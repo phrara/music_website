@@ -28,23 +28,38 @@ func (s *SongService) SearchForSongs(keyWord string) tool.Res {
 		return tool.GetGoodResult(nil)
 	}
 	if tool.IllegalWordsInspect(keyWord) {
-		return tool.GetGoodResult(s.songDao.SearchFor(keyWord))
+		sl := s.songDao.SearchFor(keyWord)
+		infoList := make([]model.SongInfo, 0)
+		for _, v := range sl {
+			if v.IsDelete == "0" {
+				continue
+			}
+			sn := s.sgrDao.GetSingerInfo(v.SingerId).SingerName
+			si := model.NewSongInfo(&v, sn)
+			infoList = append(infoList, *si)
+		}
+		return tool.GetGoodResult(infoList)
 	} else {
 		return tool.GetBadResult("exists illegal words")
 	}
 }
 
 // 获取单曲列表
-func (s *SongService) GetSongList() tool.Res {
-	infoList := make([]model.SongInfo,1000)
+func (s *SongService) GetSongList(index, size int) tool.Res {
+	infoList := make([]model.SongInfo, 0)
 	list := s.songDao.GetSongList()
-	for _, v := range list {
-		if v.IsDelete == "0" {
+	num := 0
+	for i, v := range list {
+		if v.IsDelete == "0" || i < (index - 1) * size {
 			continue
 		}
 		sn := s.sgrDao.GetSingerInfo(v.SingerId).SingerName
 		si := model.NewSongInfo(&v, sn)
 		infoList = append(infoList, *si)
+		num++
+		if num == size {
+			break
+		}
 	}
 	return tool.GetGoodResult(infoList)
 }
