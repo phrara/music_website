@@ -3,6 +3,7 @@ package service
 import (
 	"MusicWebsite/dao"
 	"MusicWebsite/model"
+	"MusicWebsite/tool"
 )
 
 type AdminService struct {
@@ -16,11 +17,13 @@ func NewAdminService() *AdminService{
 }
 
 
-func (as *AdminService) AdminLogin(admin *model.Admin) bool {
+func (as *AdminService) AdminLogin(admin *model.Admin) tool.Res {
 	a := as.ad.ValidateAdmin(admin)
 	if a.Id != 0 {
-		return true
+		a.Name = "***********"
+		a.Password = "************"
+		return tool.GetGoodResult(*a)
 	} else {
-		return false
+		return tool.GetBadResult("failed")
 	}
 }

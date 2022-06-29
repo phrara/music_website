@@ -20,63 +20,68 @@ func NewUserService() *UserService {
 }
 
 // UserRegister 用户注册
-func (us *UserService) UserRegister(user *model.User) bool {
+func (us *UserService) UserRegister(user *model.User) tool.Res {
 	// 注册时间
 	t := strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
 	user.RegisterTime = t
 	// 口令加密
 	user.Password = tool.Encrypt(user.Password)
 	// 用户id
-	user.Uid = tool.GetRandomId(t)
+	user.Uid = tool.GetRandomId(t + user.Username)
 	b := us.userdao.AddUser(user)
 	if b {
-		return true
+		return tool.GetGoodResult(*user)
 	} else {
-		return false
+		return tool.GetBadResult("register failed")
 	}
 
 }
 
 // UserLogin 用户登录
-func (us *UserService) UserLogin(user *model.User) (bool, *model.User) {
-	user.Uid = ""
+func (us *UserService) UserLogin(user *model.User) tool.Res {
+	user.Username = ""
 	// 口令加密
 	user.Password = tool.Encrypt(user.Password)
 	validatedUser := us.userdao.ValidateUser(user)
-	if validatedUser.Uid != "" {
-		return true, user
+	if validatedUser.Username != "" {
+		validatedUser.Password = "*************"
+		// 设置 token
+		// TODO
+
+		return tool.GetGoodResult(*validatedUser, nil)
 	} else {
-		return false, nil
+		return tool.GetBadResult("log in failed")
 	}
 }
 
 // 用户注销
-func (us *UserService) DeleteUser(user *model.UserInfo) (bool) {
+func (us *UserService) DeleteUser(user *model.UserInfo) tool.Res {
 	if b := us.userdao.DelUser(user.Uid); b {
-		return true
+		return tool.GetGoodResult(nil)
 	} else {
-		return false
+		return tool.GetBadResult("failed")
 	}
 }
 
 // 更改密码
-func (us *UserService) UpdatePassword(userInfo *model.UserInfo) bool {
+func (us *UserService) UpdatePassword(userInfo *model.UserInfo) tool.Res {
 	u := us.userdao.GetUserInfo(userInfo.Uid)
 	if u.Password == tool.Encrypt(userInfo.OldPassword) {
 		userInfo.NewPassword = tool.Encrypt(userInfo.NewPassword)
 		b := us.userdao.UpdatePassword(model.NewUser(userInfo.Uid, "", userInfo.NewPassword))	
 		if b {
-			return true
+			return tool.GetGoodResult(nil)
 		} else {
-			return false
+			return tool.GetBadResult("err")
 		}
 	} else {
-		return false
+		return tool.GetBadResult("err")
 	}
 }
 
 
 // 更改用户信息
-func (us *UserService) UpdateInfo(user *model.User) {
+func (us *UserService) UpdateInfo(user *model.User) tool.Res {
 	us.userdao.UpdateUserInfo(user)
+	return tool.GetGoodResult(nil)
 }

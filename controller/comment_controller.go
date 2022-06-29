@@ -19,17 +19,8 @@ func AddComment(c *gin.Context){
 	if err != nil {
 		return
 	}
-	if b := cs.AddComment(cmt); b {
-		c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg": "illegalWords",
-			"data": nil,
-		})
-	}
+	b := cs.AddComment(cmt)
+	c.JSON(200, b)
 }
 
 // @title	GetCommentByIid
@@ -43,9 +34,6 @@ func GetCommentByIid(c *gin.Context){
 	if err != nil {
 		return
 	}
-	clist := cs.GetCommentByIid(cmt)
-	c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": clist,
-		})
+	res := cs.GetCommentByIid(cmt)
+	c.JSON(200, res)
 }

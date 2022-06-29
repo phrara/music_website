@@ -21,15 +21,6 @@ func AdminLogin(c *gin.Context){
 		return
 	}
 
-	if b := as.AdminLogin(admin); b {
-		c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg": "err",
-			"data": nil,
-		})	
-	}
+	b := as.AdminLogin(admin)
+	c.JSON(200, b)
 }

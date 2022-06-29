@@ -3,9 +3,11 @@ package controller
 import (
 	"MusicWebsite/model"
 	"MusicWebsite/service"
-
 	"github.com/gin-gonic/gin"
 )
+
+var rs = service.NewRecordService()
+
 
 // @title	GetRecord
 // @description   获取记录
@@ -13,7 +15,6 @@ import (
 // @param      c      *gin.Context       "HttpContent"
 // @return    无       无      "无"
 func GetRecord(c *gin.Context){
-	rs := service.NewRecordService()
 	r := model.NewRecord("","")
 	err := c.ShouldBind(r)
 	if err != nil {
@@ -32,7 +33,6 @@ func GetRecord(c *gin.Context){
 // @param      c      *gin.Context       "HttpContent"
 // @return    无       无      "无"
 func AddRecord(c *gin.Context){
-	rs := service.NewRecordService()
 	r := model.NewRecord("","")
 	err := c.ShouldBind(r)
 	if err != nil {

@@ -18,17 +18,17 @@ func NewCommentService() *CommentService{
 }
 
 
-func (cs *CommentService) AddComment(c *model.Comment) bool {
+func (cs *CommentService) AddComment(c *model.Comment) tool.Res {
 	if tool.IllegalWordsInspect(c.Content) {
 		c.Date = time.Now().Format("2006-01-02 03:04:05")
 		cs.cd.AddComment(c)
-		return true
+		return tool.GetGoodResult(nil)
 	} else {
-		return false
+		return tool.GetBadResult("faild")
 	}
 }
 
-func (cs *CommentService) GetCommentByIid(c *model.Comment) []model.Comment {
+func (cs *CommentService) GetCommentByIid(c *model.Comment) tool.Res {
 	c2 := cs.cd.GetCommentByIid(c.Iid)
-	return c2
+	return tool.GetGoodResult(c2)
 }

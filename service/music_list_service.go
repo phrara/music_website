@@ -3,6 +3,7 @@ package service
 import (
 	"MusicWebsite/dao"
 	"MusicWebsite/model"
+	"MusicWebsite/tool"
 )
 
 type MusicListService struct {
@@ -17,53 +18,53 @@ func NewMusicListService() *MusicListService {
 }
 
 // 获取某用户总歌单
-func (s *MusicListService) GetOnesMusicList(userInfo *model.UserInfo) []model.MusicList {
+func (s *MusicListService) GetOnesMusicList(userInfo *model.UserInfo) tool.Res {
 	list := s.mld.GetMusicListsByUid(userInfo.Uid)
-	return list
+	return tool.GetGoodResult(list)
 }
 
 // 获取总歌单
-func (m *MusicListService) GetMusicLists() []model.MusicList {
-	return m.mld.GetMusicLists()
+func (m *MusicListService) GetMusicLists() tool.Res {
+	return tool.GetGoodResult(m.mld.GetMusicLists()) 
 }
 
 // GetMusicList 获取歌单
-func (s *MusicListService) GetMusicList(ml *model.MusicList) []model.Song {
+func (s *MusicListService) GetMusicList(ml *model.MusicList) tool.Res {
 	list := s.mld.GetMusicList(ml.Mid)
 	songs := make([]model.Song,0)
 	for _, v := range list {
 		song := s.songDao.GetSongInfo(v.Iid)
 		songs = append(songs, *song)
 	}
-	return songs
+	return tool.GetGoodResult(songs)
 }
 
 // AddMusicList 添加歌单
-func (s *MusicListService) AddMusicList(ml *model.MusicList) bool {
+func (s *MusicListService) AddMusicList(ml *model.MusicList) tool.Res {
 	b := s.mld.AddMusicList(ml)
 	if b {
-		return true
+		return tool.GetGoodResult(nil)
 	} else {
-		return false
+		return tool.GetBadResult("failed")
 	}
 }
 
 // AddSong 添加单曲
-func (s *MusicListService) AddSong(lc *model.ListContent) bool {
+func (s *MusicListService) AddSong(lc *model.ListContent) tool.Res {
 	b := s.mld.AddSongToList(lc)
 	if b {
-		return true
+		return tool.GetGoodResult(nil)
 	} else {
-		return false
+		return tool.GetBadResult("failed")
 	}
 }
 
 // 删除单曲
-func (s *MusicListService) DelSong(lc *model.ListContent) bool {
+func (s *MusicListService) DelSong(lc *model.ListContent) tool.Res {
 	b := s.mld.DelSongFromList(lc)
 	if b {
-		return true
+		return tool.GetGoodResult(nil)
 	} else {
-		return false
+		return tool.GetBadResult("failed")
 	}
 }

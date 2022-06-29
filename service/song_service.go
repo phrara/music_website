@@ -22,20 +22,20 @@ func NewSongService() *SongService {
 }
 
 // 查询歌曲
-func (s *SongService) SearchForSongs(keyWord string) (bool, []model.Song) {
+func (s *SongService) SearchForSongs(keyWord string) tool.Res {
 	keyWord = strings.Trim(keyWord," ")
 	if keyWord == "" {
-		return false, nil
+		return tool.GetGoodResult(nil)
 	}
 	if tool.IllegalWordsInspect(keyWord) {
-		return true, s.songDao.SearchFor(keyWord)
+		return tool.GetGoodResult(s.songDao.SearchFor(keyWord))
 	} else {
-		return false, nil
+		return tool.GetBadResult("exists illegal words")
 	}
 }
 
 // 获取单曲列表
-func (s *SongService) GetSongList() []model.SongInfo {
+func (s *SongService) GetSongList() tool.Res {
 	infoList := make([]model.SongInfo,1000)
 	list := s.songDao.GetSongList()
 	for _, v := range list {
@@ -46,22 +46,22 @@ func (s *SongService) GetSongList() []model.SongInfo {
 		si := model.NewSongInfo(&v, sn)
 		infoList = append(infoList, *si)
 	}
-	return infoList
+	return tool.GetGoodResult(infoList)
 }
 
 // 获取单曲信息
-func (s *SongService) GetSongInfo(song *model.Song) (bool, *model.Song) {
+func (s *SongService) GetSongInfo(song *model.Song) tool.Res {
 	s2 := s.songDao.GetSongInfo(song.Iid)
 	if s2.SongName != "" {
-		return true, s2
+		return tool.GetGoodResult(*s2)
 	} else {
-		return false, nil
+		return tool.GetBadResult("failed")
 	}
 }
 
 
 // 添加单曲
-func (s *SongService) AddSingleSong(songInfo *model.SongInfo) (bool) {
+func (s *SongService) AddSingleSong(songInfo *model.SongInfo) tool.Res {
 	song := model.NewSong("","")
 	song.Album = songInfo.Album
 	song.DownUrl = songInfo.DownUrl
@@ -72,23 +72,23 @@ func (s *SongService) AddSingleSong(songInfo *model.SongInfo) (bool) {
 	song.PlayCount = 0
 	song.SongUrl = songInfo.SongUrl
 	song.PublishTime = strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
-	song.Iid = tool.GetRandomId(song.PublishTime)
+	song.Iid = tool.GetRandomId(song.PublishTime + song.SongName)
 	song.SingerId = s.sgrDao.GetSuidByName(songInfo.SingerName)
 
 	if b := s.songDao.AddSong(song); b {
-		return true
+		return tool.GetGoodResult(nil)
 	} else {
-		return false
+		return tool.GetBadResult("failed")
 	}
 
 }
 
 // 删除
-func (s *SongService) DelSingleSong(song *model.Song) bool {
+func (s *SongService) DelSingleSong(song *model.Song) tool.Res {
 	if b := s.songDao.DeleteSong(song.Iid); b {
-		return true
+		return tool.GetGoodResult(nil)
 	} else {
-		return false
+		return tool.GetBadResult("failed")
 	}
 
 }	

@@ -21,18 +21,8 @@ func SearchByKw(c *gin.Context){
 	}
 	var m map[string]any
 	_ = json.Unmarshal(b, &m)
-	f, list := ss.SearchForSongs(m["kw"].(string))
-	if f {
-		c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": list,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg": "err",
-			"data": list,
-		})
-	}
+	list := ss.SearchForSongs(m["kw"].(string))
+	c.JSON(200, list)
 }
 	
 
@@ -43,10 +33,7 @@ func SearchByKw(c *gin.Context){
 // @return    无       无      "无"
 func GetSongs(c *gin.Context){
 	list := ss.GetSongList()
-	c.JSON(200, gin.H{
-		"msg": "ok",
-		"data": list,
-	})
+	c.JSON(200, list)
 }
 
 // @title	AddSong
@@ -60,18 +47,8 @@ func AddSong(c *gin.Context){
 	if err != nil {
 		return 
 	}
-	if b := ss.AddSingleSong(si); b {
-		c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg": "err",
-			"data": nil,
-		})
-	}
-
+	b := ss.AddSingleSong(si)
+	c.JSON(200, b)
 }
 
 // @title	DelSongs
@@ -85,18 +62,8 @@ func DelSong(c *gin.Context){
 	if err != nil {
 		return 
 	}
-	if b := ss.DelSingleSong(s); b {
-		c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg": "err",
-			"data": nil,
-		})
-	}
-
+	b := ss.DelSingleSong(s)
+	c.JSON(200, b)
 }
 
 // @title	GetSongInfo
@@ -110,16 +77,6 @@ func GetSongInfo(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	b, s := ss.GetSongInfo(song)
-	if b {
-		c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": *s,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg": "err",
-			"data": nil,
-		})
-	}
+	b := ss.GetSongInfo(song)
+	c.JSON(200, b)
 }

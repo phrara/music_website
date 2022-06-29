@@ -16,7 +16,7 @@ func (*UserDao) GetUserInfo(uid string) *model.User {
 
 // ValidateUser 登录验证
 func (*UserDao) ValidateUser(user *model.User) *model.User {
-	DBMgr.Where("name = ? and password = ?", user.Username, user.Password).First(user)
+	DBMgr.Where("uid = ? and password = ?", user.Uid, user.Password).First(user)
 	return user
 }
 

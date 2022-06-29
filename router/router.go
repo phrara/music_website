@@ -29,6 +29,7 @@ func posts(r *gin.Engine) {
 	r.POST("/register", controller.AddUserHandler)
 	r.POST("/login", controller.UserLoginHandler)
 	r.POST("/updatePw", controller.UpdatePassword)
+	r.POST("/updateInfo", controller.UpdateUserInfo)
 
 	r.POST("/getml", controller.GetMusicListHandler)
 	r.POST("/getUmls", controller.GetMLByUid)

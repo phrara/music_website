@@ -7,13 +7,10 @@ import (
 )
 
 // 初始盐
-var prefixSalt string
-var suffixSalt string
-
-func init() {
+const (
 	prefixSalt = "BUPT_Music_Website_2022"
 	suffixSalt = "YiYanDingZhen_JianDingWeiJia"
-}
+)
 
 // Encrypt 口令加密
 func Encrypt(password string) string {

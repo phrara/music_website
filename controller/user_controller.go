@@ -19,18 +19,8 @@ func AddUserHandler(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	b := us.UserRegister(user)
-	if b {
-		c.JSON(200, gin.H{
-			"msg":  "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg":  "err",
-			"data": nil,
-		})
-	}
+	res := us.UserRegister(user)
+	c.JSON(200, res)
 }
 
 // @title	UserLoginHandler
@@ -44,18 +34,8 @@ func UserLoginHandler(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	b, user1 := us.UserLogin(user)
-	if b {
-		c.JSON(200, gin.H{
-			"msg":  "ok",
-			"data": *user1,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg":  "err",
-			"data": nil,
-		})
-	}
+	b := us.UserLogin(user)
+	c.JSON(200, b)
 }
 
 // @title	UpdatePassword
@@ -70,17 +50,7 @@ func UpdatePassword(c *gin.Context){
 		return
 	}
 	b := us.UpdatePassword(info)
-	if b {
-		c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg": "err",
-			"data": nil,
-		})
-	}
+	c.JSON(200, b)
 }
 
 // 用户注销
@@ -90,17 +60,8 @@ func DelUser(c *gin.Context){
 	if err != nil {
 		return
 	}
-	if b := us.DeleteUser(info); b {
-		c.JSON(200, gin.H{
-			"msg": "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg": "err",
-			"data": nil,
-		})
-	}
+	b := us.DeleteUser(info)
+	c.JSON(200, b)
 }
 
 
@@ -111,11 +72,8 @@ func UpdateUserInfo(c *gin.Context){
 	if err != nil {
 		return
 	}
-	us.UpdateInfo(user)
-	c.JSON(200, gin.H{
-		"msg": "ok",
-		"data": *user,
-	})
+	res := us.UpdateInfo(user)
+	c.JSON(200, res)
 }
 
 

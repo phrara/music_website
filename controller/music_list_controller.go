@@ -20,10 +20,7 @@ func GetMusicListHandler(c *gin.Context) {
 		return
 	}
 	list := mls.GetMusicList(ml)
-	c.JSON(200, gin.H{
-		"msg":  "ok",
-		"data": list,
-	})
+	c.JSON(200, list)
 }
 
 // @title	GetMLByUid
@@ -38,10 +35,7 @@ func GetMLByUid(c *gin.Context){
 		return
 	}
 	list := mls.GetOnesMusicList(ui)
-	c.JSON(200, gin.H{
-		"msg":  "ok",
-		"data": list,
-	})
+	c.JSON(200, list)
 }
 
 // @title	GetMLs
@@ -51,10 +45,7 @@ func GetMLByUid(c *gin.Context){
 // @return    无       无      "无"
 func GetMLs(c *gin.Context){
 	list := mls.GetMusicLists()
-	c.JSON(200, gin.H{
-		"msg":  "ok",
-		"data": list,
-	})
+	c.JSON(200, list)
 }
 
 // @title	AddSongToList
@@ -68,17 +59,8 @@ func AddSongToList(c *gin.Context){
 	if err != nil {
 		return
 	}
-	if b := mls.AddSong(lc); b {
-		c.JSON(200, gin.H{
-			"msg":  "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg":  "err",
-			"data": nil,
-		})
-	}
+	b := mls.AddSong(lc)
+	c.JSON(200, b)
 }
 
 // @title	DelSongFromML
@@ -92,18 +74,8 @@ func DelSongFromML(c *gin.Context){
 	if err != nil {
 		return
 	}
-	if b := mls.DelSong(lc); b {
-		c.JSON(200, gin.H{
-			"msg":  "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg":  "err",
-			"data": nil,
-		})
-	}
-
+	b := mls.DelSong(lc)
+	c.JSON(200, b)
 }
 
 // @title	AddMusicList
@@ -117,15 +89,6 @@ func AddMusicList(c *gin.Context){
 	if err != nil {
 		return 
 	}
-	if b := mls.AddMusicList(ml); b {
-		c.JSON(200, gin.H{
-			"msg":  "ok",
-			"data": nil,
-		})
-	} else {
-		c.JSON(200, gin.H{
-			"msg":  "err",
-			"data": nil,
-		})
-	}
+	b := mls.AddMusicList(ml)
+	c.JSON(200, b)
 }
