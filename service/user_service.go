@@ -46,9 +46,11 @@ func (us *UserService) UserLogin(user *model.User) tool.Res {
 	if validatedUser.Username != "" {
 		validatedUser.Password = "*************"
 		// 设置 token
-		// TODO
-
-		return tool.GetGoodResult(*validatedUser, nil)
+		token, err := tool.GetToken(validatedUser.Uid)
+		if err != nil {
+			return tool.GetBadResult("get Token failed")
+		}
+		return tool.GetGoodResult(*validatedUser, token)
 	} else {
 		return tool.GetBadResult("log in failed")
 	}
