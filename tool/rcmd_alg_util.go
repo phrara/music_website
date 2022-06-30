@@ -1,11 +1,6 @@
 package tool
 
 
-const (
-	FileName = "./a.txt"
-	PyFileName = "./b.py"
-	CMD = "python3"
-)
 
 // 读取文件操作
 func ReadData(){
