@@ -30,6 +30,17 @@ func NewRCMDService() *RCMDService {
 func (rs *RCMDService) GetRcmdUsers(user *model.UserInfo) tool.Res {
 	ur := rs.rd.GetRcmdUsers(user.Uid)
 	ulist := make([]model.User,0)
+	favor := rs.ud.GetUserInfo(user.Uid).Des
+	records := rs.rcd.GetAllRecordByUid(user.Uid)
+	recNum := 0
+	for _, v := range records {
+		rec, _ := strconv.ParseInt(v.Count, 10, 64)
+		recNum += int(rec)
+	}
+	if recNum < 50 {
+		return tool.GetGoodResult(rs.rd.GetSimilarUsers(favor))
+	}
+
 	for _, v := range ur.GetTopUsers() {
 		u := rs.ud.GetUserInfo(v)
 		u.Password = "*********"
@@ -58,6 +69,7 @@ func (rs *RCMDService) GetRcmdSongs(user *model.UserInfo) tool.Res {
 				slist = append(slist, *si)
 			}
 		}
+		return tool.GetGoodResult(slist)
 	}
 	sr := rs.rd.GetRcmdSongs(user.Uid)
 	for _, v := range sr.GetSongs() {

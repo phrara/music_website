@@ -24,7 +24,7 @@ func (u User) TableName() string {
 func NewUser(uid, username, password string) *User {
 	return &User{
 		Uid:      uid,
-		Username: password,
-		Password: username,
+		Username: username,
+		Password: password,
 	}
 }

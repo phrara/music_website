@@ -22,3 +22,10 @@ func (r *RCMDDao) GetSimilarSongs(iid string) *model.SongSimilar {
 	DBMgr.Where("iid = ?", iid).First(ss)
 	return ss
 }
+
+// 模糊查询相似用户
+func (r *RCMDDao) GetSimilarUsers(favor string) []model.User {
+	su := make([]model.User, 10)
+	DBMgr.Where("des LIKE ?", "%"+favor+"%").Find(&su)
+	return su
+}
