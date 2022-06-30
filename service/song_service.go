@@ -4,6 +4,7 @@ import (
 	"MusicWebsite/dao"
 	"MusicWebsite/model"
 	"MusicWebsite/tool"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -47,7 +48,29 @@ func (s *SongService) SearchForSongs(keyWord string) tool.Res {
 // 获取单曲列表
 func (s *SongService) GetSongList(index, size int) tool.Res {
 	infoList := make([]model.SongInfo, 0)
-	list := s.songDao.GetSongList()
+	list := s.songDao.GetSongList(1000)
+	num := 0
+	for i, v := range list {
+		if v.IsDelete == "0" || i < (index - 1) * size {
+			continue
+		}
+		sn := s.sgrDao.GetSingerInfo(v.SingerId).SingerName
+		si := model.NewSongInfo(&v, sn)
+		infoList = append(infoList, *si)
+		num++
+		if num == size {
+			break
+		}
+	}
+	return tool.GetGoodResult(infoList)
+}
+
+// 未登录时获取热门歌曲
+func (s *SongService) GetHotSongs(index, size int) tool.Res {
+	infoList := make([]model.SongInfo, 0)
+	list := s.songDao.GetSongList(1000)
+	// 降序排序
+	sort.Sort(model.SongList(list))
 	num := 0
 	for i, v := range list {
 		if v.IsDelete == "0" || i < (index - 1) * size {

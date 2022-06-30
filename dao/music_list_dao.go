@@ -20,8 +20,8 @@ func (m *MusicListDao) GetMusicListsByUid(uid string) []model.MusicList {
 }
 
 // 获取总歌单
-func (m *MusicListDao) GetMusicLists() []model.MusicList {
-	mls := make([]model.MusicList, 100)
+func (m *MusicListDao) GetMusicLists(num int) []model.MusicList {
+	mls := make([]model.MusicList, num)
 	DBMgr.Find(&mls)
 	return mls
 }

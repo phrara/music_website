@@ -13,8 +13,8 @@ func (s *SongDao) SearchFor(keyWord string) []model.Song {
 }
 
 // 获取单曲列表
-func (*SongDao) GetSongList() []model.Song {
-	list := make([]model.Song,1000)
+func (*SongDao) GetSongList(num int) []model.Song {
+	list := make([]model.Song, num)
 	DBMgr.Find(&list)
 	return list
 }

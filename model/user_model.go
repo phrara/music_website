@@ -12,6 +12,7 @@ type User struct {
 	Age          string `gorm:"column:age" json:"age"`
 	Area         string `gorm:"column:area" json:"area"`
 	RegisterTime string `gorm:"column:registerTime" json:"registerTime"`
+	// "0,1,2,3,4,5,6,7,8,9" 表示喜欢歌曲的类型
 	Des          string `gorm:"column:des" json:"des"`
 }
 

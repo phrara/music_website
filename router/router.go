@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 初始化路由
 func RouteInit(r *gin.Engine, indexPath string) {
 
 	// 首页跳转路由
@@ -48,6 +49,7 @@ func posts(r *gin.Engine) {
 	r.POST("/deleteSong", controller.DelSong)
 	r.POST("/searchSongs", controller.SearchByKw)
 	r.POST("/discover", controller.GetSongs)
+	r.POST("/hot", controller.GetHotSongs)
 
 	// 播放记录管理
 	r.POST("/addRecord", controller.AddRecord)
@@ -59,5 +61,7 @@ func posts(r *gin.Engine) {
 
 	// 推荐算法
 	r.POST("/recommendUsers", controller.GetRcmdUsers)
+	r.POST("/recommendSongs", controller.GetRcmdSongs)
+	r.POST("/similarSongs", controller.GetSimilarSongs)
 	
 }

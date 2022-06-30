@@ -55,3 +55,11 @@ func (ud *UserDao) UpdatePassword(user *model.User) bool {
 func (ud *UserDao) UpdateUserInfo(user *model.User) {
 	DBMgr.Model(&model.User{}).Updates(*user)
 }
+
+
+// 查询所有用户
+func (ud *UserDao) GetAllUsers(num int) []model.User {
+	ulist := make([]model.User, num)
+	DBMgr.Find(&ulist)
+	return ulist
+}

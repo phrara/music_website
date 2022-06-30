@@ -97,3 +97,28 @@ func GetSongInfo(c *gin.Context) {
 	b := ss.GetSongInfo(song)
 	c.JSON(200, b)
 }
+
+// @title	GetHotSongs
+// @description   获取热门歌曲（未登录时）
+// @auth      彭竑睿           时间（2022/6/28）
+// @param      c      *gin.Context       "HttpContent"
+// @return    无       无      "无"
+func GetHotSongs(c *gin.Context) {
+	b, err := c.GetRawData()
+	if err != nil {
+		return
+	}
+	var data tool.Res
+	_ = json.Unmarshal(b, &data)
+	index := int64(0)
+	switch data["currentPage"].(type) {
+	case string:
+		index, _ = strconv.ParseInt(data["currentPage"].(string), 10, 64)
+	case float64:
+		index = int64(data["currentPage"].(float64))
+	default:
+		index = data["currentPage"].(int64)
+	}
+	list := ss.GetHotSongs(int(index), 10)
+	c.JSON(200, list)
+}

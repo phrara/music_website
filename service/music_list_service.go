@@ -28,7 +28,7 @@ func (s *MusicListService) GetOnesMusicList(userInfo *model.UserInfo) tool.Res {
 
 // 获取总歌单
 func (m *MusicListService) GetMusicLists() tool.Res {
-	return tool.GetGoodResult(m.mld.GetMusicLists()) 
+	return tool.GetGoodResult(m.mld.GetMusicLists(100)) 
 }
 
 // GetMusicList 获取歌单

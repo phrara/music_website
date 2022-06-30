@@ -2,20 +2,19 @@ package model
 
 import "MusicWebsite/tool"
 
-/*
-
-	iid,
-    song_name,
-   	singer_name,
-   	album,
-	playcnt,
-  	song_url,
-   	down_url,
-   	song_time,
-   	picUrl,
-   	publishTime
-
-*/
+// 音乐种类
+const (
+	ROCK = iota
+	RB
+	JAZZ
+	CLASSIC
+	POP
+	RAP
+	FOLK
+	PURE
+	ELECTRONIC
+	COUNTRYSIDE
+)
 
 type SongInfo struct {
 	Iid string `json:"iid"`

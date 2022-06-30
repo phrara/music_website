@@ -8,6 +8,12 @@ import (
 type RecordDao struct {
 }
 
+// 查询某用户所有记录
+func (r *RecordDao) GetAllRecordByUid(uid string) []*model.Record {
+	res := make([]*model.Record, 100)
+	DBMgr.Where("uid = ?").Find(&res)
+	return res
+}
 
 // 检查某条记录
 func (r *RecordDao) CheckRecord(uid, iid string) (int64, *model.Record) {
