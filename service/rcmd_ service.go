@@ -38,7 +38,15 @@ func (rs *RCMDService) GetRcmdUsers(user *model.UserInfo) tool.Res {
 		recNum += int(rec)
 	}
 	if recNum < 50 {
-		return tool.GetGoodResult(rs.rd.GetSimilarUsers(favor))
+		list := rs.rd.GetSimilarUsers(favor)
+		for i, v := range list {
+			if i == 10 {
+				break
+			}
+			v.Des = v.TransformDes()
+			ulist = append(ulist, v)
+		}
+		return tool.GetGoodResult(ulist)
 	}
 
 	for _, v := range ur.GetTopUsers() {

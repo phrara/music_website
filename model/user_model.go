@@ -1,6 +1,9 @@
 package model
 
 import (
+	"strconv"
+	"strings"
+
 	_ "github.com/jinzhu/gorm"
 )
 
@@ -19,6 +22,39 @@ type User struct {
 // TableName 设置表名
 func (u User) TableName() string {
 	return "user"
+}
+
+func (u User) TransformDes() string {
+	list := strings.Split(u.Des, ",")
+	des := ""
+	for _, v := range list {
+		i, _ := strconv.ParseInt(v, 10, 64)
+		switch i {
+		case ROCK:
+			des += "Rock,"
+		case RB:
+			des += "R&B,"
+		case JAZZ:
+			des += "Jazz,"
+		case CLASSIC:
+			des += "Classic,"
+		case POP:
+			des += "Pop,"
+		case RAP:
+			des += "Rap"
+		case FOLK:
+			des += "Folk"
+		case PURE:
+			des += "Pure"
+		case ELECTRONIC:
+			des += "Electronic"
+		case COUNTRYSIDE:
+			des += "Country"
+		default:
+			des += ""
+		}
+	}
+	return des + "..."
 }
 
 func NewUser(uid, username, password string) *User {
