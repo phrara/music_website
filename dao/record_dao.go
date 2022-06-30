@@ -11,7 +11,7 @@ type RecordDao struct {
 // 查询某用户所有记录
 func (r *RecordDao) GetAllRecordByUid(uid string) []*model.Record {
 	res := make([]*model.Record, 100)
-	DBMgr.Where("uid = ?").Find(&res)
+	DBMgr.Where("uid = ?", uid).Find(&res)
 	return res
 }
 
