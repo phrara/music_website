@@ -13,12 +13,14 @@ import (
 type SongService struct {
 	songDao *dao.SongDao
 	sgrDao *dao.SingerDao
+	cd *dao.CommentDao
 }
 
 func NewSongService() *SongService {
 	ss := new(SongService)
 	ss.songDao = new(dao.SongDao)
 	ss.sgrDao = new(dao.SingerDao)
+	ss.cd = new(dao.CommentDao)
 	return ss
 }
 
@@ -91,7 +93,12 @@ func (s *SongService) GetHotSongs(index, size int) tool.Res {
 func (s *SongService) GetSongInfo(song *model.Song) tool.Res {
 	s2 := s.songDao.GetSongInfo(song.Iid)
 	if s2.SongName != "" {
-		return tool.GetGoodResult(*s2)
+		cmt := s.cd.GetCommentByIid(song.Iid)
+		data := tool.Res{
+			"songInfo": *s2,
+			"comment": cmt,
+		}
+		return tool.GetGoodResult(data)
 	} else {
 		return tool.GetBadResult("failed")
 	}
