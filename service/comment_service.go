@@ -20,7 +20,7 @@ func NewCommentService() *CommentService{
 
 func (cs *CommentService) AddComment(c *model.Comment) tool.Res {
 	if tool.IllegalWordsInspect(c.Content) {
-		c.Date = time.Now().Format("2006-01-02 03:04:05")
+		c.Date = time.Now().Format("2006-01-02 15:04:05")
 		cs.cd.AddComment(c)
 		return tool.GetGoodResult(nil)
 	} else {

@@ -2,6 +2,7 @@ package model
 
 type Comment struct {
 	Cid int `gorm:"column:cid" json:"cid"`
+	// 音乐id
 	Iid string `gorm:"column:iid" json:"iid"`
 	Uid string `gorm:"column:uid" json:"uid"`
 	Content string `gorm:"column:content" json:"content"`
