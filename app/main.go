@@ -4,7 +4,7 @@ import (
 	"MusicWebsite/router"
 	"MusicWebsite/tool"
 	"os/exec"
-
+	"time"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,9 +17,15 @@ const (
 
 // 执行推荐算法
 func StartRcmdAlgo(){
-	subProcess := exec.Command(CMD, PythonScript)
-	b, _ := subProcess.Output()
-	tool.WriteFile(OutputFile, string(b))
+	// 定时器
+	// 间隔：24H
+	ticker := time.Tick(time.Hour * 24)
+	for i := range ticker {
+		subProcess := exec.Command(CMD, PythonScript)
+		b, _ := subProcess.Output()
+		tool.WriteFile(OutputFile, i.Format("[2006-01-02 15:04:05]") + "\n" + string(b))
+	}
+	
 }
 
 func main() {
