@@ -30,18 +30,24 @@ func gets(r *gin.Engine) {
 // POST 请求路由
 func posts(r *gin.Engine) {
 	
+	// 后台
+	r.POST("/adminLogin", controller.AdminLogin)
+
 	// 用户管理
 	r.POST("/register", controller.AddUserHandler)
 	r.POST("/login", controller.UserLoginHandler)
 	r.POST("/updatePw", controller.UpdatePassword)
 	r.POST("/updateUser", controller.UpdateUserInfo)
+	r.POST("/delUser", controller.DelUser)
 
 	// 歌单管理
 	r.POST("/getml", controller.GetMusicListHandler)
+	r.POST("/delml", controller.DeleteMuisicList)
 	r.POST("/getUmls", controller.GetMLByUid)
 	r.POST("/addStML", controller.AddSongToList)
 	r.POST("/delSfML", controller.DelSongFromML)
 	r.POST("/addML", controller.AddMusicList)
+	
 
 	// 单曲管理
 	r.POST("/songId", controller.GetSongInfo)

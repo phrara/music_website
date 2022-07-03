@@ -73,3 +73,13 @@ func (s *MusicListService) DelSong(lc *model.ListContent) tool.Res {
 		return tool.GetBadResult("failed")
 	}
 }
+
+// 删除歌单
+func (s *MusicListService) DelList(ml *model.MusicList) tool.Res {
+	b := s.mld.DeleteMuisicList(ml.Mid)
+	if b {
+		return tool.GetGoodResult(nil)
+	} else {
+		return tool.GetBadResult("del failed")
+	}
+}

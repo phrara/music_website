@@ -1,6 +1,8 @@
 package dao
 
-import "MusicWebsite/model"
+import (
+	"MusicWebsite/model"
+)
 
 type MusicListDao struct {
 }
@@ -67,6 +69,20 @@ func (m *MusicListDao) AddMusicList(ml *model.MusicList) bool {
 	DBMgr.Where("mid = ?", ml.Mid).First(mlist)
 	if mlist.ListName == "" {
 		DBMgr.Create(ml)
+		return true
+	} else {
+		return false
+	}
+}
+
+
+// 删除歌单
+func (m *MusicListDao) DeleteMuisicList(mid int) bool {
+	ml := model.NewMusicList(0, "", "")
+	lc := model.NewListContent(0, "")
+	DBMgr.Where("mid = ?", mid).Delete(lc)
+	res := DBMgr.Where("mid = ?", mid).Delete(ml)
+	if res.RowsAffected >= 0 {
 		return true
 	} else {
 		return false

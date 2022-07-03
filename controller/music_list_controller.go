@@ -9,7 +9,7 @@ import (
 var mls = service.NewMusicListService()
 
 // @title	GetMusicListHandler
-// @description   获得歌单
+// @description   获得歌单info
 // @auth      彭竑睿           时间（2022/6/28）
 // @param      c      *gin.Context       "HttpContent"
 // @return    无       无      "无"
@@ -91,4 +91,15 @@ func AddMusicList(c *gin.Context){
 	}
 	b := mls.AddMusicList(ml)
 	c.JSON(200, b)
+}
+
+// 删除某歌单
+func DeleteMuisicList(c *gin.Context) {
+	ml := model.NewMusicList(0 ,"", "")
+	err := c.ShouldBind(ml)
+	if err != nil {
+		return
+	}
+	r := mls.DelList(ml)
+	c.JSON(200, r)
 }
