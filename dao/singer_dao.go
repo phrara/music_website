@@ -13,7 +13,7 @@ func (s *SingerDao) GetSingerInfo(suid string) *model.Singer {
 
 func (s *SingerDao) GetSuidByName(singerName string) string {
 	singer := model.NewSinger("","","")
-	DBMgr.Where("sing_name = ?",singerName).First(singer)
+	DBMgr.Where("singer_name = ?",singerName).First(singer)
 	return singer.Suid
 }
 

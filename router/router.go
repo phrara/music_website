@@ -52,7 +52,7 @@ func posts(r *gin.Engine) {
 	// 从某歌单删除某歌曲 mid, iid
 	r.POST("/delSfML", controller.DelSongFromML)
 	// 添加歌单 uid, listname
-	r.POST("/addML", controller.AddMusicList)
+	r.POST("/addMl", controller.AddMusicList)
 	
 
 	// 单曲管理
@@ -61,6 +61,7 @@ func posts(r *gin.Engine) {
 	r.POST("/deleteSong", controller.DelSong)
 	r.POST("/searchSongs", controller.SearchByKw)
 	r.POST("/discover", controller.GetSongs)
+	r.POST("/display", controller.GetSongs)
 	r.POST("/hot", controller.GetHotSongs)
 
 	// 播放记录管理
