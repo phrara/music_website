@@ -41,11 +41,17 @@ func posts(r *gin.Engine) {
 	r.POST("/delUser", controller.DelUser)
 
 	// 歌单管理
+	// 获取某歌单中单曲的列表 mid
 	r.POST("/getml", controller.GetMusicListHandler)
+	// 删除 mid
 	r.POST("/delml", controller.DeleteMuisicList)
+	// 获取歌单列表 uid
 	r.POST("/getUmls", controller.GetMLByUid)
+	// 向某歌单添加某歌曲 mid, iid
 	r.POST("/addStML", controller.AddSongToList)
+	// 从某歌单删除某歌曲 mid, iid
 	r.POST("/delSfML", controller.DelSongFromML)
+	// 添加歌单 uid, listname
 	r.POST("/addML", controller.AddMusicList)
 	
 

@@ -1,6 +1,9 @@
 package dao
 
-import "MusicWebsite/model"
+import (
+	"MusicWebsite/model"
+	"fmt"
+)
 
 type CommentDao struct {
 }
@@ -14,7 +17,8 @@ func (cd *CommentDao) AddComment(c *model.Comment) bool {
 // 获取某歌曲的评论
 func (cd *CommentDao) GetCommentByIid(iid string) []model.Comment {
 	clist := make([]model.Comment,15)
-	DBMgr.Where("iid = ?", iid).First(&clist)
+	DBMgr.Where("iid = ?", iid).Find(&clist)
+	fmt.Println(clist)
 	return clist
 }
 
