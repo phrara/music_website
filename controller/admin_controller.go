@@ -24,3 +24,10 @@ func AdminLogin(c *gin.Context){
 	b := as.AdminLogin(admin)
 	c.JSON(200, b)
 }
+
+
+// 数据统计
+func GetStatistics(c *gin.Context) {
+	r := as.GetStatistics()
+	c.JSON(200, r)
+}

@@ -76,4 +76,8 @@ func UpdateUserInfo(c *gin.Context){
 	c.JSON(200, res)
 }
 
-
+// 获取所有用户
+func GetAllUsers(c *gin.Context) {
+	r := us.GetAllUsers()
+	c.JSON(200, r)
+}

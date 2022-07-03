@@ -87,3 +87,9 @@ func (us *UserService) UpdateInfo(user *model.User) tool.Res {
 	us.userdao.UpdateUserInfo(user)
 	return tool.GetGoodResult(nil)
 }
+
+// 获取所有用户
+func (us *UserService) GetAllUsers() tool.Res {
+	u := us.userdao.GetAllUsers(3000)
+	return tool.GetGoodResult(u)
+}

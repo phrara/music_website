@@ -17,3 +17,30 @@ func (a *AdminDao) ValidateAdmin(admin *model.Admin) *model.Admin {
 	return admin
 }
 
+func (a *AdminDao) GetTotalUsers() int {
+	var c int
+	DBMgr.Model(&model.User{}).Count(&c)
+	return c
+}
+
+func (a *AdminDao) GetTotalSongs() int {
+	var c int
+	DBMgr.Model(&model.Song{}).Count(&c)
+	return c
+}
+
+func (a *AdminDao) GetTotalMLs() int {
+	var c int
+	DBMgr.Model(&model.MusicList{}).Count(&c)
+	return c
+}
+
+func (a *AdminDao) GetTotalMalesAndFemales() (int, int) {
+	var(
+		mc int
+		fc int
+	) 
+	DBMgr.Model(&model.User{}).Where("gender = '男'").Count(&mc)
+	DBMgr.Model(&model.User{}).Where("gender = '女'").Count(&fc)
+	return mc, fc
+}

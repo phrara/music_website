@@ -3,6 +3,8 @@ package controller
 import (
 	"MusicWebsite/model"
 	"MusicWebsite/service"
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,6 +21,7 @@ func GetMusicListHandler(c *gin.Context) {
 	if err != nil {
 		return
 	}
+	fmt.Println(1)
 	list := mls.GetMusicList(ml)
 	c.JSON(200, list)
 }

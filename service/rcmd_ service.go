@@ -52,6 +52,7 @@ func (rs *RCMDService) GetRcmdUsers(user *model.UserInfo) tool.Res {
 	for _, v := range ur.GetTopUsers() {
 		u := rs.ud.GetUserInfo(v)
 		u.Password = "*********"
+		u.Des = u.TransformDes()
 		ulist = append(ulist, *u)
 	}
 	return tool.GetGoodResult(ulist)

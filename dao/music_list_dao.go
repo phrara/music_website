@@ -54,9 +54,8 @@ func (m *MusicListDao) DelSongFromList(lc *model.ListContent) bool {
 // CheckContent 查询歌单中某单曲是否存在
 func (m *MusicListDao) CheckContent(mid int, iid string) (bool, int) {
 	lc := model.NewListContent(0, "")
-	lc.Id = -1
 	DBMgr.Where("mid = ? and iid = ?", mid, iid).First(lc)
-	if lc.Id < 0 {
+	if lc.Id <= 0 {
 		return false, -1
 	} else {
 		return true, lc.Id

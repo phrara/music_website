@@ -20,11 +20,14 @@ func RouteInit(r *gin.Engine, indexPath string) {
 
 // GET 请求路由
 func gets(r *gin.Engine) {
-	// r.GET("/regis", controller.RegisterHandler)
-	// r.GET("/log", controller.LoginHandler)
-
+	// 总歌曲列表
 	r.GET("/songList",controller.GetSongs)
-	r.GET("/getmls", controller.GetMLs)
+	// 总歌单列表
+	r.GET("/allMLs", controller.GetMLs)
+	// 总用户列表
+	r.GET("/allUsers", controller.GetAllUsers)
+	// 数据统计
+	r.GET("/statistics", controller.GetStatistics)
 }
 
 // POST 请求路由
