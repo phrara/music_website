@@ -60,6 +60,6 @@ func (ud *UserDao) UpdateUserInfo(user *model.User) {
 // 查询所有用户
 func (ud *UserDao) GetAllUsers(num int) []model.User {
 	ulist := make([]model.User, num)
-	DBMgr.Find(&ulist)
+	DBMgr.Order("registerTime desc").Limit(num).Find(&ulist)
 	return ulist
 }

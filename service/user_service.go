@@ -90,6 +90,6 @@ func (us *UserService) UpdateInfo(user *model.User) tool.Res {
 
 // 获取所有用户
 func (us *UserService) GetAllUsers() tool.Res {
-	u := us.userdao.GetAllUsers(3000)
+	u := us.userdao.GetAllUsers(1000)
 	return tool.GetGoodResult(u)
 }

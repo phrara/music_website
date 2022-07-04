@@ -50,7 +50,8 @@ func (s *SongService) SearchForSongs(keyWord string) tool.Res {
 // 获取单曲列表
 func (s *SongService) GetSongList(index, size int) tool.Res {
 	infoList := make([]model.SongInfo, 0)
-	list := s.songDao.GetSongList(1000)
+	list := s.songDao.GetSongList(2000)
+	list = list[600:]
 	num := 0
 	for i, v := range list {
 		if v.IsDelete == "0" || i < (index - 1) * size {
